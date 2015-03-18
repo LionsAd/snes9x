@@ -52,22 +52,21 @@
 //#define strrchr strrchrA
 #endif
 
-#else // __WIN32
+#else // __WIN32__
 
 #define FORCEINLINE __inline__ __attribute__((always_inline))
 #define ENSURE_FORCEINLINE __attribute__((always_inline)) // inline or die
 
 int vscprintf (const char * format, va_list pargs)
-{ 
-    int retval; 
+{
+    int retval;
     va_list argcopy;
-    va_copy(argcopy, pargs); 
-    retval = vsnprintf(NULL, 0, format, argcopy); 
-    va_end(argcopy); 
+    va_copy(argcopy, pargs);
+    retval = vsnprintf(NULL, 0, format, argcopy);
+    va_end(argcopy);
     return retval;
 }
 
-#define MAX_PATH PATH_MAX
 #define _chdir chdir
 
 #endif
@@ -1667,51 +1666,18 @@ DEFINE_LUA_FUNCTION(emu_wait, "")
 
 
 
+#ifndef __WIN32__
+
+// emu_frameadvance is only needed on unix.
+
 DEFINE_LUA_FUNCTION(emu_frameadvance, "")
 {
-/*
-	if(FailVerifyAtFrameBoundary(L, "emu.frameadvance", 0,1))
-		return emu_wait(L);
-
-	int uid = luaStateToUIDMap[L];
-	LuaContextInfo& info = GetCurrentInfo();
-
-	if(!info.ranFrameAdvance)
-	{
-		// otherwise we'll never see the first frame of GUI drawing
-		if(info.speedMode != SPEEDMODE_MAXIMUM)
-			Show_Genesis_Screen();
-		info.ranFrameAdvance = true;
-	}
-
-	switch(info.speedMode)
-	{
-		default:
-		case SPEEDMODE_NORMAL:
-			while(!Step_Gens_MainLoop(true, true) && !info.panic);
-			break;
-		case SPEEDMODE_NOTHROTTLE:
-			while(!Step_Gens_MainLoop(Paused!=0, false) && !info.panic);
-			if(!(FastForwardKeyDown && (GetActiveWindow()==HWnd || BackgroundInput)))
-				emu_emulateframefastnoskipping(L);
-			else
-				emu_emulateframefast(L);
-			break;
-		case SPEEDMODE_TURBO:
-			while(!Step_Gens_MainLoop(Paused!=0, false) && !info.panic);
-			emu_emulateframefast(L);
-			break;
-		case SPEEDMODE_MAXIMUM:
-			while(!Step_Gens_MainLoop(Paused!=0, false) && !info.panic);
-			emu_emulateframeinvisible(L);
-			break;
-	}
-	*/
 	S9xMainLoop();
 	S9xProcessEvents(FALSE);
 
 	return 0;
 }
+#endif
 
 DEFINE_LUA_FUNCTION(emu_pause, "")
 {
@@ -4582,7 +4548,9 @@ static int gcStateData(lua_State *L)
 
 static const struct luaL_reg emulib [] =
 {
+#ifndef __WIN32__
 	{"frameadvance", emu_frameadvance},
+#endif
 //	{"speedmode", emu_speedmode},
 //	{"wait", emu_wait},
 	{"pause", emu_pause},
@@ -5470,13 +5438,15 @@ struct TieredRegion
 
 		bool Contains(unsigned int address, int size) const
 		{
-			/*
+
+		// @todo This is not supported on unix as the below code fails on gcc/clang.
+#ifdef __WIN32__
 			std::vector<Island>::const_iterator iter = islands.begin();
 			std::vector<Island>::const_iterator end = islands.end();
 			for(; iter != end; ++iter)
 				if(iter->Contains(address, size))
 					return true;
-			*/
+#endif
 			return false;
 		}
 	};
@@ -5496,7 +5466,10 @@ struct TieredRegion
 
 	TieredRegion()
 	{
-		//Calculate(std::vector<unsigned int>());
+		// @todo This is not supported on unix as the below code fails on gcc/clang.
+#ifdef __WIN32__
+		Calculate(std::vector<unsigned int>());
+#endif
 	}
 
 	__forceinline int NotEmpty()

@@ -3,7 +3,12 @@
 #ifndef LUA_SCRIPT_H
 #define LUA_SCRIPT_H
 
+#ifndef __WIN32__
+// Unix needs the portable variables for lua.
 #include "jma/portable.h"
+// MAX_PATH only exists on Windows.
+#define MAX_PATH PATH_MAX
+#endif
 
 void OpenLuaContext(int uid, void(*print)(int uid, const char* str) = 0, void(*onstart)(int uid) = 0, void(*onstop)(int uid, bool statusOK) = 0);
 void RunLuaScriptFile(int uid, const char* filename);
