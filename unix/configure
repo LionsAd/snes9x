@@ -4032,9 +4032,183 @@ $as_echo "no" >&6; }
 
 	fi
 
-#AC_S9X_COMPILER_FLAG([-pedantic],             [pedantic])
-#AC_S9X_COMPILER_FLAG([-Wall],                 [Wall])
-#AC_S9X_COMPILER_FLAG([-W],                    [W])
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether g++ accepts -pedantic" >&5
+$as_echo_n "checking whether g++ accepts -pedantic... " >&6; }
+
+	if ${snes9x_cv_option_pedantic+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+		OLD_CXXFLAGS="$CXXFLAGS"
+		CXXFLAGS="$OLD_CXXFLAGS -pedantic"
+
+		if test "$cross_compiling" = yes; then :
+  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "cannot run test program while cross compiling
+See \`config.log' for more details" "$LINENO" 5; }
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+			int	foo;
+
+			int	main (int argc, char **argv)
+			{
+				/* The following code triggs gcc:s generation of aline opcodes,
+				   which some versions of as does not support. */
+
+				if (argc > 0)
+					argc = 0;
+
+				return (argc);
+			}
+
+_ACEOF
+if ac_fn_cxx_try_run "$LINENO"; then :
+  snes9x_cv_option_pedantic="yes"
+else
+  snes9x_cv_option_pedantic="no"
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+
+fi
+
+
+	CXXFLAGS="$OLD_CXXFLAGS"
+
+	if test "x$snes9x_cv_option_pedantic" = "xyes"; then
+		S9XFLGS="$S9XFLGS -pedantic"
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	fi
+
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether g++ accepts -Wall" >&5
+$as_echo_n "checking whether g++ accepts -Wall... " >&6; }
+
+	if ${snes9x_cv_option_Wall+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+		OLD_CXXFLAGS="$CXXFLAGS"
+		CXXFLAGS="$OLD_CXXFLAGS -Wall"
+
+		if test "$cross_compiling" = yes; then :
+  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "cannot run test program while cross compiling
+See \`config.log' for more details" "$LINENO" 5; }
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+			int	foo;
+
+			int	main (int argc, char **argv)
+			{
+				/* The following code triggs gcc:s generation of aline opcodes,
+				   which some versions of as does not support. */
+
+				if (argc > 0)
+					argc = 0;
+
+				return (argc);
+			}
+
+_ACEOF
+if ac_fn_cxx_try_run "$LINENO"; then :
+  snes9x_cv_option_Wall="yes"
+else
+  snes9x_cv_option_Wall="no"
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+
+fi
+
+
+	CXXFLAGS="$OLD_CXXFLAGS"
+
+	if test "x$snes9x_cv_option_Wall" = "xyes"; then
+		S9XFLGS="$S9XFLGS -Wall"
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	fi
+
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether g++ accepts -W" >&5
+$as_echo_n "checking whether g++ accepts -W... " >&6; }
+
+	if ${snes9x_cv_option_W+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+		OLD_CXXFLAGS="$CXXFLAGS"
+		CXXFLAGS="$OLD_CXXFLAGS -W"
+
+		if test "$cross_compiling" = yes; then :
+  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "cannot run test program while cross compiling
+See \`config.log' for more details" "$LINENO" 5; }
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+			int	foo;
+
+			int	main (int argc, char **argv)
+			{
+				/* The following code triggs gcc:s generation of aline opcodes,
+				   which some versions of as does not support. */
+
+				if (argc > 0)
+					argc = 0;
+
+				return (argc);
+			}
+
+_ACEOF
+if ac_fn_cxx_try_run "$LINENO"; then :
+  snes9x_cv_option_W="yes"
+else
+  snes9x_cv_option_W="no"
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+
+fi
+
+
+	CXXFLAGS="$OLD_CXXFLAGS"
+
+	if test "x$snes9x_cv_option_W" = "xyes"; then
+		S9XFLGS="$S9XFLGS -W"
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	fi
+
 
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether g++ accepts -Wno-unused-parameter" >&5
 $as_echo_n "checking whether g++ accepts -Wno-unused-parameter... " >&6; }
@@ -4693,15 +4867,15 @@ if ${snes9x_cv_liblua+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-	ac_fn_cxx_check_header_mongrel "$LINENO" "lua.h" "ac_cv_header_lua_h" "$ac_includes_default"
-if test "x$ac_cv_header_lua_h" = xyes; then :
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for lua_load in -llua" >&5
-$as_echo_n "checking for lua_load in -llua... " >&6; }
-if ${ac_cv_lib_lua_lua_load+:} false; then :
+	ac_fn_cxx_check_header_mongrel "$LINENO" "lua5.1/lua.h" "ac_cv_header_lua5_1_lua_h" "$ac_includes_default"
+if test "x$ac_cv_header_lua5_1_lua_h" = xyes; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for lua_load in -llua5.1" >&5
+$as_echo_n "checking for lua_load in -llua5.1... " >&6; }
+if ${ac_cv_lib_lua5_1_lua_load+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-llua  $LIBS"
+LIBS="-llua5.1  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -4721,17 +4895,17 @@ return lua_load ();
 }
 _ACEOF
 if ac_fn_cxx_try_link "$LINENO"; then :
-  ac_cv_lib_lua_lua_load=yes
+  ac_cv_lib_lua5_1_lua_load=yes
 else
-  ac_cv_lib_lua_lua_load=no
+  ac_cv_lib_lua5_1_lua_load=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_lua_lua_load" >&5
-$as_echo "$ac_cv_lib_lua_lua_load" >&6; }
-if test "x$ac_cv_lib_lua_lua_load" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_lua5_1_lua_load" >&5
+$as_echo "$ac_cv_lib_lua5_1_lua_load" >&6; }
+if test "x$ac_cv_lib_lua5_1_lua_load" = xyes; then :
   snes9x_cv_liblua="yes"
 else
   snes9x_cv_liblua="no"
@@ -4756,11 +4930,11 @@ fi
 
 if test "x$enable_lua" = "xyes"; then
 	if test "x$snes9x_cv_liblua" = "xyes"; then
-		S9XDEFS="$S9XDEFS -DHAVE_LUA"
-		S9XLIBS="$S9XLIBS -llua"
+		S9XDEFS="$S9XDEFS -DHAVE_LUA -DHAVE_LUA_51"
+		S9XLIBS="$S9XLIBS -llua5.1"
 	else
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: liblua not found. Build without lua support." >&5
-$as_echo "$as_me: WARNING: liblua not found. Build without lua support." >&2;}
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: liblua5.1 not found. Build without lua support." >&5
+$as_echo "$as_me: WARNING: liblua5.1 not found. Build without lua support." >&2;}
 		enable_lua="no"
 	fi
 fi

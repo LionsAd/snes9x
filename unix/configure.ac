@@ -101,9 +101,9 @@ fi
 
 AC_S9X_COMPILER_FLAG([-fno-exceptions],       [no_exceptions])
 AC_S9X_COMPILER_FLAG([-fno-rtti],             [no_rtti])
-#AC_S9X_COMPILER_FLAG([-pedantic],             [pedantic])
-#AC_S9X_COMPILER_FLAG([-Wall],                 [Wall])
-#AC_S9X_COMPILER_FLAG([-W],                    [W])
+AC_S9X_COMPILER_FLAG([-pedantic],             [pedantic])
+AC_S9X_COMPILER_FLAG([-Wall],                 [Wall])
+AC_S9X_COMPILER_FLAG([-W],                    [W])
 AC_S9X_COMPILER_FLAG([-Wno-unused-parameter], [Wno_unused_parameter])
 
 # Check if the OS is Linux.
@@ -232,8 +232,8 @@ fi
 
 AC_CACHE_VAL([snes9x_cv_liblua],
 [
-	AC_CHECK_HEADER([lua.h],
-		[AC_CHECK_LIB([lua], [lua_load], [snes9x_cv_liblua="yes"], [snes9x_cv_liblua="no"])],
+	AC_CHECK_HEADER([lua5.1/lua.h],
+		[AC_CHECK_LIB([lua5.1], [lua_load], [snes9x_cv_liblua="yes"], [snes9x_cv_liblua="no"])],
 		[snes9x_cv_liblua="no"])
 ])
 
@@ -244,10 +244,10 @@ AC_ARG_ENABLE([lua],
 
 if test "x$enable_lua" = "xyes"; then
 	if test "x$snes9x_cv_liblua" = "xyes"; then
-		S9XDEFS="$S9XDEFS -DHAVE_LUA"
-		S9XLIBS="$S9XLIBS -llua"
+		S9XDEFS="$S9XDEFS -DHAVE_LUA -DHAVE_LUA_51"
+		S9XLIBS="$S9XLIBS -llua5.1"
 	else
-		AC_MSG_WARN([liblua not found. Build without lua support.])
+		AC_MSG_WARN([liblua5.1 not found. Build without lua support.])
 		enable_lua="no"
 	fi
 fi
