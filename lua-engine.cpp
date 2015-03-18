@@ -81,12 +81,22 @@ bool g_onlyCallSavestateCallbacks = false;
 extern int (*Update_Frame)();
 extern int (*Update_Frame_Fast)();
 
+#ifdef HAVE_LUA_51
+extern "C" {
+	#include "lua5.1/lua.h"
+	#include "lua5.1/lauxlib.h"
+	#include "lua5.1/lualib.h"
+	// lstate.h only exists in the source of lua so we ship our own.
+	#include "unix/lua/includes/lstate.h"
+};
+#else
 extern "C" {
 	#include "lua.h"
 	#include "lauxlib.h"
 	#include "lualib.h"
 	#include "lstate.h"
 };
+#endif
 
 enum SpeedMode
 {
